@@ -44,8 +44,11 @@ export function testCase3(expectedText) {
     cy.log('Visit https://en.wikipedia.org/wiki/Metis_(mythology)')
     cy.visit(`wiki/Metis_(mythology)`).then(() => {
         cy.get(`.vertical-navbox`).within(() => {
-            cy.get(`a[href*="/wiki/Nike_(mythology)"]`).trigger('mouseover').contains(expectedText)
-            cy.wait(1)
+            cy.get(`a[href*="/wiki/Nike_(mythology)"]`).trigger('mouseover',{force: true})
+        }).then(() => {
+            cy.get('mwe-popups').within($popup => {
+                expect($popup).to.contain(expectedText)
+            })
         })
     })
 }
@@ -54,11 +57,14 @@ export function testCase4() {
     cy.log('Visit https://en.wikipedia.org/wiki/Metis_(mythology)')
     cy.visit(`wiki/Metis_(mythology)`).then(() => {
         cy.get(`.vertical-navbox`).within(() => {
-            cy.get(`a[href*="/wiki/Nike_(mythology)"]`).click({ force: true }).then(() => {
-                cy.url()
-                cy.get(`.toclevel-1 a[href ="#Family_tree"]`)
+            cy.get(`a[href*="/wiki/Nike_(mythology)"]`).click({force: true})
+        }).then(() => {
+                cy.url().should('include', '/wiki/Nike_(mythology)').then(() => {
+                    cy.get('#Family_tree').parents('.mw-parser-output').within(() => {
+                        cy.get('.toccolours')
+                    })
+                })
             })
-
         })
-    })
 }
+

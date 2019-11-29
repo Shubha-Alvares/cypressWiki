@@ -15,14 +15,14 @@ describe('Testcases for Mythology', () => {
         testCase2()
     })
 
-    it('Validate  in the _Personified concepts_, `Nike` has a popup with some desired text', () => {
+    it.only('Validate  in the _Personified concepts_, `Nike` has a popup with some desired text', () => {
         let expectedText = `In ancient Greek religion, Nike was a goddess who personified victory. Her Roman equivalent was
 Victoria.`
         cy.log(`Nike expected to have text ${expectedText}`)
         testCase3(expectedText)
     })
 
-    it.only('Validate  the headings listed in the `Contents` box have functioning hyperlinks', () => {
+    it('Validate  the headings listed in the `Contents` box have functioning hyperlinks', () => {
         testCase4()
     })
 })
