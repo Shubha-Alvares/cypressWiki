@@ -32,6 +32,7 @@ export function testCase2() {
         cy.get(`#toc .toclevel-1`).each($row => {
             cy.get($row).within(() => {
                 cy.get('.toctext').parent().should('have.attr', 'href').then($href => {
+                    cy.log('validating the hyperlinks are functional')
                     cy.get(`a[href*="${$href}"]`).click()
                     cy.url().should('eq', `${Cypress.config().baseUrl}wiki/Metis_(mythology)${$href}`)
                 })
@@ -47,6 +48,7 @@ export function testCase3(expectedText) {
             cy.get(`a[href*="/wiki/Nike_(mythology)"]`).trigger('mouseover',{force: true})
         }).then(() => {
             cy.get('mwe-popups').within($popup => {
+                cy.log('Validate  in the _Personified concepts_, `Nike` has a popup with some desired text')
                 expect($popup).to.contain(expectedText)
             })
         })
@@ -61,6 +63,7 @@ export function testCase4() {
         }).then(() => {
                 cy.url().should('include', '/wiki/Nike_(mythology)').then(() => {
                     cy.get('#Family_tree').parents('.mw-parser-output').within(() => {
+                        cy.log('Validating if the Nike hyperlink opens a page with family tree')
                         cy.get('.toccolours')
                     })
                 })
